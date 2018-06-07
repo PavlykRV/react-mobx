@@ -1,0 +1,1 @@
+export { PostAddComponent as PostAdd } from './PostAddComponent'
