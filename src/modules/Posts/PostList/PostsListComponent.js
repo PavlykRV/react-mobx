@@ -5,7 +5,8 @@ import {
 	ButtonToolbar,
 	ButtonGroup,
 	Button,
-	Well
+	Well,
+	Alert
 } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 @observer
@@ -16,9 +17,11 @@ class PostsListComponent extends Component {
 			editablePostId,
 			handlePostChange,
 			handlePostEditSave,
-			handlePostEdit
+			handlePostEdit,
+			handlePostDelete
 		} = this.props.store
-		return (
+
+		return this.props.store.posts.length ? (
 			<Well>
 				{this.props.store.posts.map(post => {
 					return (
@@ -33,10 +36,7 @@ class PostsListComponent extends Component {
 										onChange={e => handlePostChange(e)}
 									/>
 								) : (
-									<Panel.Title componentClass="h3">
-										{post.title}
-                                           
-									</Panel.Title>
+									<Panel.Title componentClass="h3">{post.title}</Panel.Title>
 								)}
 							</Panel.Heading>
 							<Panel.Body>
@@ -49,10 +49,12 @@ class PostsListComponent extends Component {
 										onChange={e => this.props.store.handlePostChange(e)}
 									/>
 								) : (
-                                    <Fragment>
-                                            <p>{post.content}</p>
-                                            <p className='post-date'>{`Added at: ${new Date(post.createdAt).toLocaleString()}`}</p>
-                                    </Fragment>
+									<Fragment>
+										<p>{post.content}</p>
+										<p className="post-date">{`Added at: ${new Date(
+											post.createdAt
+										).toLocaleString()}`}</p>
+									</Fragment>
 								)}
 							</Panel.Body>
 							<Panel.Footer>
@@ -85,6 +87,10 @@ class PostsListComponent extends Component {
 					)
 				})}
 			</Well>
+		) : (
+			<Alert bsStyle="warning">
+				<strong>Oh sorry!</strong> Can`t find any posts
+			</Alert>
 		)
 	}
 }

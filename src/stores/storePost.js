@@ -9,16 +9,18 @@ class ObservablePostsStore {
 	@observable
 	posts = [
 		{
-            id: cuid(),
-            createdAt: Date.now(),
-            title: 'Creating a VS Code Theme',
-            content: 'Everyone has special and perhaps, particular, tastes when it comes to their code editor. There are literally thousands of themes out there, and for good reason: a thing of beauty and enhancement to productivity for one can be a hindrance to another.',
-            categories: [],
+			id: cuid(),
+			createdAt: Date.now(),
+			title: 'Creating a VS Code Theme',
+			content:
+				'Everyone has special and perhaps, particular, tastes when it comes to their code editor. There are literally thousands of themes out there, and for good reason: a thing of beauty and enhancement to productivity for one can be a hindrance to another.',
+			categories: []
 		}
 	]
 	@observable post = getClearPost()
 	@observable editablePost = false
 	@observable editablePostId = ''
+	@observable focusNewPost = false
 
 	constructor() {
 		autorun(() => console.log(this))
@@ -46,13 +48,21 @@ class ObservablePostsStore {
 	handlePostEditSave = () => {
 		this.editablePost = false
 		this.editablePostId = ''
-        this.post = getClearPost()
+		this.post = getClearPost()
+	}
+
+	setNewPostFocus = () => {
+        this.focusNewPost = true
+	}
+
+	clearNewPostFocus = () => {
+        this.focusNewPost = false
 	}
 
 	addPost = () => {
 		if (this.post.title && this.post.content) {
-            this.posts.push({ ...this.post, createdAt: Date.now()})
-            this.post = getClearPost()
+			this.posts.push({ ...this.post, createdAt: Date.now() })
+			this.post = getClearPost()
 		}
 	}
 }
