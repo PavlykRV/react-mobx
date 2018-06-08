@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
-export function ActionsPanelListComponent(props) {
+export default function ActionsPanelListComponent(props) {
 	return <ListGroup>
 			<ListGroupItem bsStyle="success">Post added</ListGroupItem>
 			<ListGroupItem bsStyle="info">Post changed</ListGroupItem>

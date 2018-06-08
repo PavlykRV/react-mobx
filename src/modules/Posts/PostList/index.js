@@ -1,1 +1,0 @@
-export { PostsListComponent as PostsList } from './PostsListComponent'

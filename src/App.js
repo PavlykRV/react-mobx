@@ -1,34 +1,42 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import { Grid, Row, Col } from 'react-bootstrap'
-import { Header } from './modules/App/Header'
-import { CategoryList } from './modules/Categories/CategoryList'
-import { PostAdd } from './modules/Posts/PostAdd'
-import { ActionsPanel } from './modules/Actions/ActionsPanelList'
-import { PostsList } from './modules/Posts/PostList'
+import { observer } from 'mobx-react'
 
+// import conponent
+import { Grid, Row, Col } from 'react-bootstrap'
+import HeaderComponent from './modules/App/Header/HeaderComponent'
+import ActionsPanelListComponent from './modules/Actions/ActionsPanelList/ActionsPanelListComponent'
+import CategoryListComponent from './modules/Categories/CategoryList/CategoryListComponent'
+import PostAddComponent from './modules/Posts/PostAdd/PostAddComponent'
+import PostsListComponent from './modules/Posts/PostList/PostsListComponent'
+
+// import mobx store
+import observablePostsStore from './stores/storePost'
+// import global styles
+import './App.css'
+@observer
 class App extends Component {
 	render() {
-		return <Grid>
+		return (
+			<Grid>
 				<Row>
 					<Col xs={12}>
-						<Header />
+                        <HeaderComponent />
 					</Col>
 				</Row>
 				<Row>
 					<Col xs={3} md={3}>
-						<CategoryList />
+                        <CategoryListComponent />
 					</Col>
 					<Col xs={9} md={6}>
-						<PostAdd />
-						<PostsList />
+						<PostAddComponent store={observablePostsStore} />
+                        <PostsListComponent store={observablePostsStore} />
 					</Col>
 					<Col xs={3} md={3}>
-						<ActionsPanel />
+                        <ActionsPanelListComponent />
 					</Col>
 				</Row>
 			</Grid>
+		)
 	}
 }
 

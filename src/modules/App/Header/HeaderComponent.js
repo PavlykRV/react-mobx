@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Nav, NavItem} from 'react-bootstrap'
 
-export function HeaderComponent(props) {
+export default function HeaderComponent(props) {
 	return (
 		<Navbar>
 			<Navbar.Header>

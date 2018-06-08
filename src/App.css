@@ -30,3 +30,9 @@
 textarea {
     resize: none;
 }
+
+.post-date {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}
