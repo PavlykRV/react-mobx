@@ -10,7 +10,16 @@ import { observer } from 'mobx-react'
 @observer
 class PostAddComponent extends Component {
 	render() {
-        console.log(this.props.store.focusNewPost)
+		const {
+			setNewPostFocus,
+			clearNewPostFocus,
+			editablePost,
+			handlePostChange,
+			post,
+			focusNewPost,
+			addPost
+		} = this.props.store
+
 		return (
 			<Well>
 				<form>
@@ -19,36 +28,28 @@ class PostAddComponent extends Component {
 							type="text"
 							placeholder="Add new post"
 							name="title"
-							onFocus={this.props.store.setNewPostFocus}
-							onBlur={this.props.store.clearNewPostFocus}
-							value={
-								!this.props.store.editablePost
-									? this.props.store.post.title
-									: ''
-							}
-							onChange={event => this.props.store.handlePostChange(event)}
+							onFocus={setNewPostFocus}
+							onBlur={clearNewPostFocus}
+							value={!editablePost ? post.title : ''}
+							onChange={event => handlePostChange(event)}
 						/>
 					</FormGroup>
-                    {(this.props.store.focusNewPost || this.props.store.post.title) && (
+					{(focusNewPost || post.title) && (
 						<Fragment>
 							<FormGroup controlId="formControlsTextarea">
 								<FormControl
 									componentClass="textarea"
 									placeholder=""
 									name="content"
-									value={
-										!this.props.store.editablePost
-											? this.props.store.post.content
-											: ''
-									}
-									onChange={event => this.props.store.handlePostChange(event)}
+									value={!editablePost ? post.content : ''}
+									onChange={event => handlePostChange(event)}
 								/>
 							</FormGroup>
 							<ButtonToolbar>
 								<Button
 									bsStyle="success"
-									onClick={this.props.store.addPost}
-									disabled={this.props.store.editablePost}
+									onClick={addPost}
+									disabled={editablePost}
 								>
 									Post
 								</Button>

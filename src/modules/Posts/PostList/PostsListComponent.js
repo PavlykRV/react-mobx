@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import CommentsListComponent from './../../Comments/CommentsList/CommentsListComponent'
 import {
 	Panel,
 	FormControl,
@@ -83,6 +84,7 @@ class PostsListComponent extends Component {
 									)}
 								</ButtonGroup>
 							</Panel.Footer>
+							<CommentsListComponent />
 						</Panel>
 					)
 				})}
