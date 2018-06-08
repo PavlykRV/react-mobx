@@ -26,3 +26,13 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+textarea {
+    resize: none;
+}
+
+.post-date {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}

@@ -1,0 +1,1 @@
+export { observablePostsStore as postStore } from './storePost'
