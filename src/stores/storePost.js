@@ -31,13 +31,8 @@ class ObservablePostsStore {
 	@observable postsCount = this.posts.length
 	@observable editablePost = false
 	@observable editablePostId = ''
-<<<<<<< HEAD
 	@observable focusNewPost = false
 
-=======
-  @observable focusNewPost = false
-    
->>>>>>> a2d38d021a160005c1f28dc441cf73cb829690e3
 	/**
 	 *
 	 */

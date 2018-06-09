@@ -32,6 +32,7 @@ class ObservableCategoriesStore {
 				if (length > this.categoriesCount) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'success',
 						content: 'Category added'
 					})
@@ -40,6 +41,7 @@ class ObservableCategoriesStore {
 				if (length < this.categoriesCount) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'danger',
 						content: 'Category removes'
 					})
