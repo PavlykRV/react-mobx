@@ -1,0 +1,10 @@
+.comment-item {
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.comment-item-actions {
+    display: flex;
+}

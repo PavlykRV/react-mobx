@@ -1,0 +1,11 @@
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.post-date {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}

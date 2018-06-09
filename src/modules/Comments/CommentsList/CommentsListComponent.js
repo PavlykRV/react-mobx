@@ -4,11 +4,14 @@ import CommentAddComponent from '../CommentAdd/CommentAddComponent'
 import CommentItemComponent from '../CommentItem/CommentItemComponent'
 import { Panel, Well } from 'react-bootstrap'
 
+// import styles
+import './CommentsListComponent.css'
+
 @observer
 class CommentsListComponent extends Component {
 	render() {
 		return (
-			<Well>
+			<div className="comments-list">
                 <CommentAddComponent />
                 {this.props.store.commentaries.map(comment => {
                     return (
@@ -18,7 +21,7 @@ class CommentsListComponent extends Component {
                         />
                     )
                 })}
-            </Well>
+            </div>
 		)
 	}
 }

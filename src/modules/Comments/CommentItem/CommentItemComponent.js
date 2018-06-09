@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import {
-	Well,
 	Panel,
 	ButtonToolbar,
 	Glyphicon,
 	ButtonGroup,
 	Button
 } from 'react-bootstrap'
+
+// import styles
+import './CommentItemComponent.css'
 @observer
 class CommentItemComponent extends Component {
 	render() {
 		return (
-			<Well>
+			<div className="comment-item">
 				<Panel.Body>{this.props.comment.content}</Panel.Body>
-				<Panel.Footer className="post-actions">
-					<ButtonToolbar>
+				<Panel.Footer>
+                    <ButtonToolbar className="comment-item-actions">
 						<ButtonGroup>
 							<Button
 								bsStyle="danger"
@@ -38,7 +40,7 @@ class CommentItemComponent extends Component {
 						</ButtonGroup>
 					</ButtonToolbar>
 				</Panel.Footer>
-			</Well>
+			</div>
 		)
 	}
 }

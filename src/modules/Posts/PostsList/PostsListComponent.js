@@ -11,6 +11,10 @@ import {
 	Alert
 } from 'react-bootstrap'
 import { observer } from 'mobx-react'
+
+// import styles
+import './PostListComponent.css'
+
 @observer
 class PostsListComponent extends Component {
 	render() {

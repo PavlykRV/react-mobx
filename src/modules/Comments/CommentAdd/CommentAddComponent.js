@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import { FormGroup, FormControl, ButtonToolbar, Button } from 'react-bootstrap'
 
+// import styles
+import './CommentAddComponent.css'
+
 @observer
 class CommentAddComponent extends Component {
 	render() {
@@ -14,10 +17,8 @@ class CommentAddComponent extends Component {
 						name="content"
 					/>
 				</FormGroup>
-				<ButtonToolbar>
-					<Button bsStyle="primary">
-						Post comment
-					</Button>
+				<ButtonToolbar className="comment-edit-actions">
+					<Button bsStyle="primary">Post comment</Button>
 				</ButtonToolbar>
 			</form>
 		)
