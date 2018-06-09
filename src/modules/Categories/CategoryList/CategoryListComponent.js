@@ -17,9 +17,9 @@ import './CategoryListComponent.css'
 class CategoryListComponent extends Component {
 	render() {
 		const { store } = this.props
-
 		return (
 			<ListGroup className="category-list">
+                <ListGroupItem className="category-item" onClick={store.clearActiveCategory}>Show all</ListGroupItem>
 				{store.categories.map(category => {
 					return (
 						<ListGroupItem className="category-item" key={category.id}>
@@ -34,7 +34,9 @@ class CategoryListComponent extends Component {
 									onChange={event => store.handleCategoryChange(event)}
 								/>
 							) : (
-								<h5>{category.name}</h5>
+								<h5 onClick={() => store.setActiveCategory(category.id)}>
+									{category.name}
+								</h5>
 							)}
 							<ButtonToolbar>
 								<ButtonGroup>

@@ -17,6 +17,7 @@ class ObservableCategoriesStore {
 	@observable category = getClearCategory()
 	@observable editableCategory = false
 	@observable editableCategoryId = ''
+	@observable activeCategory = null
 
 	/**
 	 *
@@ -48,19 +49,35 @@ class ObservableCategoriesStore {
 	 *
 	 */
 	handleCategoryEdit = categoryId => {
-        this.editableCategory = true
-        this.editableCategoryId = categoryId
-        this.category = this.categories.find(category => category.id === categoryId)
+		this.editableCategory = true
+		this.editableCategoryId = categoryId
+		this.category = this.categories.find(category => category.id === categoryId)
 	}
 
 	/**
 	 *
 	 */
 	handleCategoryEditSave = () => {
-        this.editableCategory = false
-        this.editableCategoryId = ''
+		this.editableCategory = false
+		this.editableCategoryId = ''
 		this.category = getClearCategory()
 	}
+
+	/**
+	 *
+	 */
+	setActiveCategory = categoryId => {
+		this.activeCategory = this.categories.find(
+			category => category.id === categoryId
+		)
+	}
+
+	/**
+     * 
+     */
+	clearActiveCategory = () => {
+        this.activeCategory = null
+    }
 
 	/**
 	 *
