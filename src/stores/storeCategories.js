@@ -124,6 +124,8 @@ class ObservableCategoriesStore {
 	 *
 	 */
 	setActiveCategory = categoryId => {
+        event.stopPropagation()
+        
 		this.activeCategory = this.categories.find(
 			category => category.id === categoryId
 		)

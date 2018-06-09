@@ -12,11 +12,21 @@
 .category-item input {
     max-width: calc(100% - 50px);
 }
-.category-item button {
+.category-item .small-btn {
     display: none;
 }
 
-.category-item:hover button {
+.category-item > button:first-child {
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    max-width: calc(100% - 50px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.category-item:hover .small-btn {
     display: block;
 }
 

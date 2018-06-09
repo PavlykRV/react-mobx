@@ -19,7 +19,12 @@ class CategoryListComponent extends Component {
 		const { store } = this.props
 		return (
 			<ListGroup className="category-list">
-                <ListGroupItem className="category-item" onClick={store.clearActiveCategory}>Show all</ListGroupItem>
+				<ListGroupItem
+					className="category-item"
+					onClick={store.clearActiveCategory}
+				>
+					Show all
+				</ListGroupItem>
 				{store.categories.map(category => {
 					return (
 						<ListGroupItem className="category-item" key={category.id}>
@@ -34,15 +39,16 @@ class CategoryListComponent extends Component {
 									onChange={event => store.handleCategoryChange(event)}
 								/>
 							) : (
-								<h5 onClick={() => store.setActiveCategory(category.id)}>
+                                <button onClick={() => store.setActiveCategory(category.id)}>
 									{category.name}
-								</h5>
+								</button>
 							)}
 							<ButtonToolbar>
 								<ButtonGroup>
 									<Button
 										bsSize="xsmall"
-										bsStyle="danger"
+                                        bsStyle="danger"
+                                        className="small-btn"
 										onClick={() => store.handleCategoryDelete(category.id)}
 									>
 										<Glyphicon glyph="glyphicon glyphicon-trash" />
@@ -50,7 +56,8 @@ class CategoryListComponent extends Component {
 									{store.editableCategory ? (
 										<Button
 											bsSize="xsmall"
-											bsStyle="success"
+                                            bsStyle="success"
+                                            className="small-btn"
 											onClick={() => store.handleCategoryEditSave(category.id)}
 										>
 											<Glyphicon glyph="glyphicon glyphicon-share-alt" />
@@ -58,7 +65,8 @@ class CategoryListComponent extends Component {
 									) : (
 										<Button
 											bsSize="xsmall"
-											bsStyle="info"
+                                            bsStyle="info"
+                                            className="small-btn"
 											onClick={() => store.handleCategoryEdit(category.id)}
 										>
 											<Glyphicon glyph="glyphicon glyphicon-pencil" />
