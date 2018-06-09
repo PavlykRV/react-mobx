@@ -7,7 +7,8 @@ const getClearComment = () => {
 }
 
 class ObservableCommentsStore {
-	@observable commentaries = [
+	@observable
+	commentaries = [
 		{
 			id: cuid(),
 			postId: observablePostsStore.posts[0].id,
@@ -19,6 +20,8 @@ class ObservableCommentsStore {
 	 *
 	 */
 	@observable comment = getClearComment()
+	@observable editableComment = false
+	@observable newCommentFocus = false
 
 	constructor() {
 		autorun(() => console.log(this))
@@ -35,6 +38,14 @@ class ObservableCommentsStore {
 		)
 	}
 
+	/**
+	 *
+	 */
+	toggleCommentFocus = () => {
+        this.newCommentFocus = !this.newCommentFocus
+        this.comment = getClearComment()
+	}
+
 	addComment = postId => {
 		if (this.comment.content) {
 			this.commentaries.push({
@@ -42,7 +53,8 @@ class ObservableCommentsStore {
 				postId,
 				createdAt: Date.now()
             })
-            this.comment = getClearComment()
+            this.toggleCommentFocus()
+			this.comment = getClearComment()
 		}
 	}
 }
