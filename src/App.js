@@ -19,26 +19,27 @@ import './App.css'
 @observer
 class App extends Component {
 	render() {
-		return <Grid>
+		return (
+			<Grid>
 				<Row>
 					<Col xs={12}>
 						<HeaderComponent />
 					</Col>
 				</Row>
 				<Row>
-					<Col xs={3} md={3}>
-
+                    <Col xs={10} xsOffset={1} md={3}>
 						<CategoryListComponent store={observableCategoriesStore} />
 					</Col>
-					<Col xs={9} md={6}>
+                    <Col xs={12} md={6}>
 						<PostAddComponent store={observablePostsStore} />
 						<PostsListComponent store={observablePostsStore} />
 					</Col>
-					<Col xs={3} md={3}>
+					<Col xs={10} xsOffset={1} md={3}>
 						<ActionsPanelListComponent store={observableAppActionsStore} />
 					</Col>
 				</Row>
 			</Grid>
+		)
 	}
 }
 
