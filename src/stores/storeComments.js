@@ -1,6 +1,6 @@
-import { observable, computed, autorun } from 'mobx'
-import observablePostsStore from './storePost'
+import { observable, autorun } from 'mobx'
 import cuid from 'cuid'
+import observablePostsStore from './storePost'
 
 const getClearComment = () => {
 	return { id: cuid(), createdAt: '', content: '' }
@@ -13,12 +13,10 @@ class ObservableCommentsStore {
 			id: cuid(),
 			postId: observablePostsStore.posts[0].id,
 			createdAt: Date.now(),
-			content: 'Initial mock comment with some "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, aut voluptate! Totam corporis modi corrupti est perspiciatis dolorem maiores impedit."'
+			content:
+				'Initial mock comment with some "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, aut voluptate! Totam corporis modi corrupti est perspiciatis dolorem maiores impedit."'
 		}
 	]
-	/**
-	 *
-	 */
 	@observable comment = getClearComment()
 	@observable editableComment = false
 	@observable editableCommentId = ''
@@ -29,7 +27,11 @@ class ObservableCommentsStore {
 		autorun(() => console.log(this))
 	}
 
+	/**
+	 *
+	 */
 	handleCommentChange = event => {
+		event.stopPropagation()
 		const { name, value } = event.target
 		this.comment[name] = value
 	}
@@ -37,19 +39,24 @@ class ObservableCommentsStore {
 	/**
 	 *
 	 */
-
 	handleCommentDelete = commentId => {
 		this.commentaries = this.commentaries.filter(
 			comment => comment.id !== commentId
 		)
 	}
 
+	/**
+	 *
+	 */
 	handleCommentEdit = commentId => {
 		this.editableComment = true
 		this.editableCommentId = commentId
 		this.comment = this.commentaries.find(comment => comment.id === commentId)
 	}
 
+	/**
+	 *
+	 */
 	handleCommentEditSave = () => {
 		this.editableComment = false
 		this.editableCommentId = ''
@@ -64,6 +71,9 @@ class ObservableCommentsStore {
 		this.comment = getClearComment()
 	}
 
+	/**
+	 *
+	 */
 	addComment = postId => {
 		if (this.comment.content) {
 			this.commentaries.push({
