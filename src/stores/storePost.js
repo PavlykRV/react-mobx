@@ -11,6 +11,7 @@ const getClearPost = () => {
 		commentaries: []
 	}
 }
+
 class ObservablePostsStore {
 	@observable
 	posts = [
@@ -27,7 +28,7 @@ class ObservablePostsStore {
 	@observable post = getClearPost()
 	@observable editablePost = false
 	@observable editablePostId = ''
-    @observable focusNewPost = false
+  @observable focusNewPost = false
     
 	/**
 	 *
