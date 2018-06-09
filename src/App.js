@@ -7,7 +7,7 @@ import HeaderComponent from './modules/App/Header/HeaderComponent'
 import ActionsPanelListComponent from './modules/Actions/ActionsPanelList/ActionsPanelListComponent'
 import CategoryListComponent from './modules/Categories/CategoryList/CategoryListComponent'
 import PostAddComponent from './modules/Posts/PostAdd/PostAddComponent'
-import PostsListComponent from './modules/Posts/PostList/PostsListComponent'
+import PostsListComponent from './modules/Posts/PostsList/PostsListComponent'
 
 // import mobx store
 import observablePostsStore from './stores/storePost'

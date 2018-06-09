@@ -41,3 +41,9 @@ textarea {
     display: block;
     padding: 10px 10px 10px 40px;
 }
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}

@@ -47,7 +47,7 @@ class PostAddComponent extends Component {
 							</FormGroup>
 							<ButtonToolbar>
 								<Button
-									bsStyle="success"
+									bsStyle="primary"
 									onClick={addPost}
 									disabled={editablePost}
 								>

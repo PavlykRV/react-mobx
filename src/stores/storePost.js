@@ -21,7 +21,8 @@ class ObservablePostsStore {
 			title: 'Creating a VS Code Theme',
 			content:
 				'Everyone has special and perhaps, particular, tastes when it comes to their code editor. There are literally thousands of themes out there, and for good reason: a thing of beauty and enhancement to productivity for one can be a hindrance to another.',
-			categories: [],
+            categories: [],
+            commentaries: [],
 		}
 	]
 	/**
