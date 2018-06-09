@@ -1,6 +1,7 @@
-import { observable, autorun } from 'mobx'
+import { observable, autorun, reaction, computed } from 'mobx'
 import cuid from 'cuid'
 import observablePostsStore from './storePost'
+import observableAppActionsStore from './storeAppActions'
 
 const getClearComment = () => {
 	return { id: cuid(), createdAt: '', content: '' }
@@ -18,17 +19,66 @@ class ObservableCommentsStore {
 		}
 	]
 	@observable comment = getClearComment()
+	@observable commentariesCount = this.commentaries.length
 	@observable editableComment = false
 	@observable editableCommentId = ''
 	@observable newCommentFocus = false
 	@observable newCommentPostId = ''
 
 	constructor() {
-		autorun(() => console.log(this))
+        autorun(() => console.log(this))
+        /**
+         * Store reaction on commentaries collection changes
+         */
+		reaction(
+			() => this.commentaries.length,
+			length => {
+				if (length > this.commentariesCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						createdAt: Date.now(),
+						type: 'success',
+						content: 'Comment added'
+					})
+					this.commentariesCount = length
+				}
+				if (length < this.commentariesCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						createdAt: Date.now(),
+						type: 'danger',
+						content: 'Comment removes'
+					})
+					this.commentariesCount = length
+				}
+			}
+        )
+        /**
+         * Store reaction on comment editing
+         */
+		reaction(
+			() => this.editableCommentId,
+			id => {
+				if (!id) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						createdAt: Date.now(),
+						type: 'info',
+						content: 'Comment edited'
+					})
+				}
+			}
+		)
+	}
+
+	@computed
+	get sortedComments() {
+		return this.commentaries.slice().sort((a, b) => b.createdAt - a.createdAt)
 	}
 
 	/**
-	 *
+	 * Handle change text in comment content
+	 * @param {Object} event - onChange event
 	 */
 	handleCommentChange = event => {
 		event.stopPropagation()
@@ -37,7 +87,8 @@ class ObservableCommentsStore {
 	}
 
 	/**
-	 *
+	 * Handle comment deleting from commentaries collection
+	 * @param {String} commentId - selected comment id
 	 */
 	handleCommentDelete = commentId => {
 		this.commentaries = this.commentaries.filter(
@@ -46,7 +97,8 @@ class ObservableCommentsStore {
 	}
 
 	/**
-	 *
+	 * Handle comment editing by enabling 'editableComment' and search target comment in collection
+	 * @param {String} commentId - selected comment id
 	 */
 	handleCommentEdit = commentId => {
 		this.editableComment = true
@@ -55,7 +107,7 @@ class ObservableCommentsStore {
 	}
 
 	/**
-	 *
+	 * Handle to save comment edited changes
 	 */
 	handleCommentEditSave = () => {
 		this.editableComment = false
@@ -63,7 +115,8 @@ class ObservableCommentsStore {
 		this.post = getClearComment()
 	}
 	/**
-	 *
+	 * Changing component focus for adding new comment
+	 * @param {String} postId - target post id
 	 */
 	toggleCommentFocus = postId => {
 		this.newCommentFocus = !this.newCommentFocus
@@ -72,7 +125,8 @@ class ObservableCommentsStore {
 	}
 
 	/**
-	 *
+	 * Handle new comment added to collection
+	 * @param {String} postId - target post id
 	 */
 	addComment = postId => {
 		if (this.comment.content) {

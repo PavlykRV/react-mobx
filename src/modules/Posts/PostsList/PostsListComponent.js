@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import CommentsListComponent from './../../Comments/CommentsList/CommentsListComponent'
 import observableCommentsStore from './../../../stores/storeComments'
+import observableCategoriesStore from './../../../stores/storeCategories'
 import {
 	Panel,
 	FormControl,
-	ButtonToolbar,
 	ButtonGroup,
 	Button,
 	Well,
@@ -29,7 +29,7 @@ class PostsListComponent extends Component {
 
 		return this.props.store.posts.length ? (
 			<Well>
-				{this.props.store.posts.map(post => {
+                {this.props.store.categorizedPosts.map(post => {
 					return (
 						<Panel key={post.id} className="post-item">
 							<Panel.Heading className="post-item-head">
@@ -45,7 +45,7 @@ class PostsListComponent extends Component {
 									<Panel.Title componentClass="h3">{post.title}</Panel.Title>
 								)}
 							</Panel.Heading>
-                            <Panel.Body className="post-item-body">
+							<Panel.Body className="post-item-body">
 								{editablePost && editablePostId === post.id ? (
 									<FormControl
 										componentClass="textarea"
@@ -60,6 +60,11 @@ class PostsListComponent extends Component {
 										<p className="post-date">{`Added at: ${new Date(
 											post.createdAt
 										).toLocaleString()}`}</p>
+										<p className="post-date">{`Category: ${
+											post.categories.length
+												? post.categories[0]
+												: 'uncategorized'
+										}`}</p>
 									</Fragment>
 								)}
 							</Panel.Body>
@@ -91,15 +96,17 @@ class PostsListComponent extends Component {
 								<ButtonGroup>
 									<Button
 										bsStyle={
-                                            observableCommentsStore.newCommentFocus &&
-                                            post.id === observableCommentsStore.newCommentPostId
+											observableCommentsStore.newCommentFocus &&
+											post.id === observableCommentsStore.newCommentPostId
 												? 'warning'
 												: 'primary'
 										}
-										onClick={() => observableCommentsStore.toggleCommentFocus(post.id)}
+										onClick={() =>
+											observableCommentsStore.toggleCommentFocus(post.id)
+										}
 									>
-                                        {observableCommentsStore.newCommentFocus &&
-                                        post.id === observableCommentsStore.newCommentPostId
+										{observableCommentsStore.newCommentFocus &&
+										post.id === observableCommentsStore.newCommentPostId
 											? 'Cancel'
 											: 'Add comment'}
 									</Button>

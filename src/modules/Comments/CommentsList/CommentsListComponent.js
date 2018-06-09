@@ -18,7 +18,7 @@ class CommentsListComponent extends Component {
 						store={this.props.store}
 					/>
 				)}
-				{this.props.store.commentaries.map(comment => {
+                {this.props.store.sortedComments.map(comment => {
                     if (comment.postId === this.props.post.id) {
                         return <CommentItemComponent key={comment.id} comment={comment} store={this.props.store} />
                     }

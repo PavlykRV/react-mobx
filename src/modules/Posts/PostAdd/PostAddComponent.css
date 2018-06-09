@@ -1,0 +1,8 @@
+.post-add-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-add-actions .form-group {
+    margin-bottom: 0;
+}

@@ -3,11 +3,15 @@ import React, { Component, Fragment } from 'react'
 import {
 	FormGroup,
 	FormControl,
-	ButtonToolbar,
+	ControlLabel,
 	Button,
 	Well
 } from 'react-bootstrap'
 import { observer } from 'mobx-react'
+import observableCategoriesStore from './../../../stores/storeCategories'
+
+// import styles
+import './PostAddComponent.css'
 @observer
 class PostAddComponent extends Component {
 	render() {
@@ -18,7 +22,8 @@ class PostAddComponent extends Component {
 			handlePostChange,
 			post,
 			focusNewPost,
-			addPost
+			addPost,
+			handlePostCategorySelect
 		} = this.props.store
 
 		return (
@@ -46,15 +51,36 @@ class PostAddComponent extends Component {
 									onChange={event => handlePostChange(event)}
 								/>
 							</FormGroup>
-							<ButtonToolbar>
+							<div className="post-add-actions">
+								<FormGroup controlId="formControlsSelect">
+									<FormControl
+										componentClass="select"
+										placeholder="Category"
+										name="category"
+                                        onChange={event => handlePostCategorySelect(event)}
+									>
+                                        <option hidden>select</option>
+										{observableCategoriesStore.categories.map(category => {
+											return (
+												<option
+													value={category.name}
+													name={category.name}
+													key={category.id}
+												>
+													{category.name}
+												</option>
+											)
+										})}
+									</FormControl>
+								</FormGroup>
 								<Button
 									bsStyle="primary"
 									onClick={addPost}
-									disabled={editablePost}
+									disabled={editablePost || !(post.title && post.categories.length && post.content)}
 								>
 									Post
 								</Button>
-							</ButtonToolbar>
+							</div>
 						</Fragment>
 					)}
 				</form>
