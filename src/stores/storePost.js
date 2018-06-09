@@ -1,5 +1,7 @@
-import { observable, autorun } from 'mobx'
+import { observable, autorun, computed, reaction } from 'mobx'
 import cuid from 'cuid'
+import observableCategoriesStore from './storeCategories'
+import observableAppActionsStore from './storeAppActions'
 
 const getClearPost = () => {
 	return {
@@ -25,17 +27,66 @@ class ObservablePostsStore {
 		}
 	]
 	@observable post = getClearPost()
+	@observable postsCount = this.posts.length
 	@observable editablePost = false
 	@observable editablePostId = ''
-    @observable focusNewPost = false
-    
+	@observable focusNewPost = false
+
 	/**
 	 *
 	 */
 	constructor() {
 		autorun(() => console.log(this))
-    }
-    
+		reaction(
+			() => this.posts.length,
+			length => {
+				if (length > this.postsCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'success',
+						content: 'Post added'
+					})
+					this.postsCount = length
+				}
+				if (length < this.postsCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'danger',
+						content: 'Post removes'
+					})
+					this.postsCount = length
+				}
+			}
+		)
+		reaction(
+			() => this.editablePostId,
+			id => {
+				if (!id) {
+                    observableAppActionsStore.addAction({
+                        id: cuid(),
+                        type: 'info',
+                        content: 'Post edited'
+                    })
+				}
+			}
+		)
+	}
+
+	@computed
+	get categorizedPosts() {
+		const { activeCategory } = observableCategoriesStore
+
+		if (activeCategory) {
+			return this.posts.filter(post => {
+				return (
+					post.categories.length !== 0 &&
+					post.categories.includes(activeCategory.name)
+				)
+			})
+		}
+		return this.posts
+	}
+
 	/**
 	 *
 	 */
@@ -44,16 +95,16 @@ class ObservablePostsStore {
 
 		const { name, value } = event.target
 		this.post[name] = value
-    }
-    
+	}
+
 	/**
 	 *
 	 */
 	handlePostDelete = postId => {
 		const updatedPosts = this.posts.filter(post => post.id !== postId)
 		this.posts = updatedPosts
-    }
-    
+	}
+
 	/**
 	 *
 	 */
@@ -61,8 +112,8 @@ class ObservablePostsStore {
 		this.editablePost = true
 		this.editablePostId = postId
 		this.post = this.posts.find(post => post.id === postId)
-    }
-    
+	}
+
 	/**
 	 *
 	 */
@@ -70,27 +121,27 @@ class ObservablePostsStore {
 		this.editablePost = false
 		this.editablePostId = ''
 		this.post = getClearPost()
-    }
-    
+	}
+
 	/**
 	 *
 	 */
 	setNewPostFocus = () => {
 		this.focusNewPost = true
-    }
-    
+	}
+
 	/**
 	 *
 	 */
 	clearNewPostFocus = () => {
 		this.focusNewPost = false
-    }
+	}
 
-    handlePostCategorySelect = (event) => {
-        event.stopPropagation()
-        this.post.categories.push(event.target.value)
-    }
-    
+	handlePostCategorySelect = event => {
+		event.stopPropagation()
+		this.post.categories.push(event.target.value)
+	}
+
 	/**
 	 *
 	 */

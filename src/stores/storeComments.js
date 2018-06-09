@@ -1,6 +1,7 @@
-import { observable, autorun } from 'mobx'
+import { observable, autorun, reaction } from 'mobx'
 import cuid from 'cuid'
 import observablePostsStore from './storePost'
+import observableAppActionsStore from './storeAppActions'
 
 const getClearComment = () => {
 	return { id: cuid(), createdAt: '', content: '' }
@@ -17,14 +18,48 @@ class ObservableCommentsStore {
 				'Initial mock comment with some "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, aut voluptate! Totam corporis modi corrupti est perspiciatis dolorem maiores impedit."'
 		}
 	]
-	@observable comment = getClearComment()
+    @observable comment = getClearComment()
+    @observable commentariesCount = this.commentaries.length
 	@observable editableComment = false
 	@observable editableCommentId = ''
 	@observable newCommentFocus = false
 	@observable newCommentPostId = ''
 
 	constructor() {
-		autorun(() => console.log(this))
+        autorun(() => console.log(this))
+        reaction(
+            () => this.commentaries.length,
+            length => {
+                if (length > this.commentariesCount) {
+                    observableAppActionsStore.addAction({
+                        id: cuid(),
+                        type: 'success',
+                        content: 'Comment added'
+                    })
+                    this.commentariesCount = length
+                }
+                if (length < this.commentariesCount) {
+                    observableAppActionsStore.addAction({
+                        id: cuid(),
+                        type: 'danger',
+                        content: 'Comment removes'
+                    })
+                    this.commentariesCount = length
+                }
+            }
+        )
+        reaction(
+            () => this.editableCommentId,
+            id => {
+                if (!id) {
+                    observableAppActionsStore.addAction({
+                        id: cuid(),
+                        type: 'info',
+                        content: 'Comment edited'
+                    })
+                }
+            }
+        )
 	}
 
 	/**

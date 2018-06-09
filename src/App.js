@@ -12,13 +12,13 @@ import PostsListComponent from './modules/Posts/PostsList/PostsListComponent'
 // import mobx store
 import observablePostsStore from './stores/storePost'
 import observableCategoriesStore from './stores/storeCategories'
+import observableAppActionsStore from './stores/storeAppActions'
 // import global styles
 import './App.css'
 @observer
 class App extends Component {
 	render() {
-		return (
-			<Grid>
+		return <Grid>
 				<Row>
 					<Col xs={12}>
 						<HeaderComponent />
@@ -33,11 +33,10 @@ class App extends Component {
 						<PostsListComponent store={observablePostsStore} />
 					</Col>
 					<Col xs={3} md={3}>
-						<ActionsPanelListComponent />
+						<ActionsPanelListComponent store={observableAppActionsStore} />
 					</Col>
 				</Row>
 			</Grid>
-		)
 	}
 }
 

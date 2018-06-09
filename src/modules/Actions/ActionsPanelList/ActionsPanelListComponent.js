@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { observer } from 'mobx-react';
 
-export default function ActionsPanelListComponent(props) {
-	return <ListGroup>
-			<ListGroupItem bsStyle="success">Post added</ListGroupItem>
-			<ListGroupItem bsStyle="info">Post changed</ListGroupItem>
-			<ListGroupItem bsStyle="info">Category changed</ListGroupItem>
-            <ListGroupItem bsStyle="danger">Post deleted</ListGroupItem>
-		</ListGroup>
+@observer
+class ActionsPanelListComponent extends Component {
+	render() {
+        return (
+            <ListGroup>
+                <ListGroupItem bsStyle="success">Post added</ListGroupItem>
+                {this.props.store.appActions.map(action => {
+                    return <ListGroupItem key={action.id} bsStyle={action.type}>{action.content}</ListGroupItem>
+                })}
+            </ListGroup>
+        )
+    }
 }
+
+export default ActionsPanelListComponent

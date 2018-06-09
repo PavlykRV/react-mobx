@@ -29,22 +29,7 @@ class PostsListComponent extends Component {
 
 		return this.props.store.posts.length ? (
 			<Well>
-				{this.props.store.posts.map(post => {
-					console.log(
-						'Active category:',
-						observableCategoriesStore.activeCategory
-					)
-					console.log('Post categories:', ...post.categories)
-					if (
-						observableCategoriesStore.activeCategory &&
-						(post.categories.find(
-							category =>
-								category !== observableCategoriesStore.activeCategory.name
-						) ||
-							!post.categories.length)
-					) {
-						return
-					}
+                {this.props.store.categorizedPosts.map(post => {
 					return (
 						<Panel key={post.id} className="post-item">
 							<Panel.Heading className="post-item-head">

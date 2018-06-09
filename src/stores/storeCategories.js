@@ -1,5 +1,6 @@
-import { observable, autorun } from 'mobx'
+import { observable, autorun, reaction } from 'mobx'
 import cuid from 'cuid'
+import observableAppActionsStore from './storeAppActions'
 
 const getClearCategory = () => {
 	return { id: cuid(), createdAt: '', name: '' }
@@ -15,6 +16,7 @@ class ObservableCategoriesStore {
 		}
 	]
 	@observable category = getClearCategory()
+	@observable categoriesCount = this.categories.length
 	@observable editableCategory = false
 	@observable editableCategoryId = ''
 	@observable activeCategory = null
@@ -24,6 +26,58 @@ class ObservableCategoriesStore {
 	 */
 	constructor() {
 		autorun(() => console.log(this))
+		reaction(
+			() => this.categories.length,
+			length => {
+				if (length > this.categoriesCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'success',
+						content: 'Category added'
+					})
+					this.categoriesCount = length
+				}
+				if (length < this.categoriesCount) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'danger',
+						content: 'Category removes'
+					})
+					this.categoriesCount = length
+				}
+			}
+		)
+		reaction(
+			() => this.editableCategoryId,
+			id => {
+				if (!id) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'info',
+						content: 'Category edited'
+					})
+				}
+			}
+		)
+		reaction(
+			() => this.activeCategory,
+			activeCategory => {
+				if (!activeCategory) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						type: 'warning',
+						content: 'Filter cleared'
+					})
+                }
+                if (activeCategory && activeCategory.id) {
+                    observableAppActionsStore.addAction({
+                        id: cuid(),
+                        type: 'info',
+                        content: 'Filter changed'
+                    })
+                }
+			}
+		)
 	}
 
 	/**
@@ -73,11 +127,11 @@ class ObservableCategoriesStore {
 	}
 
 	/**
-     * 
-     */
+	 *
+	 */
 	clearActiveCategory = () => {
-        this.activeCategory = null
-    }
+		this.activeCategory = null
+	}
 
 	/**
 	 *
