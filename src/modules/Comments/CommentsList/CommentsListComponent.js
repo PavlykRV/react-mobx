@@ -20,7 +20,7 @@ class CommentsListComponent extends Component {
 				)}
 				{this.props.store.commentaries.map(comment => {
                     if (comment.postId === this.props.post.id) {
-                        return <CommentItemComponent key={comment.id} comment={comment} />
+                        return <CommentItemComponent key={comment.id} comment={comment} store={this.props.store} />
                     }
 				})}
 			</div>

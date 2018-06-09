@@ -13,7 +13,7 @@ class ObservableCommentsStore {
 			id: cuid(),
 			postId: observablePostsStore.posts[0].id,
 			createdAt: Date.now(),
-			content: 'some comment'
+			content: 'Initial mock comment with some "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, aut voluptate! Totam corporis modi corrupti est perspiciatis dolorem maiores impedit."'
 		}
 	]
 	/**
@@ -21,8 +21,9 @@ class ObservableCommentsStore {
 	 */
 	@observable comment = getClearComment()
 	@observable editableComment = false
-    @observable newCommentFocus = false
-    @observable newCommentPostId = ''
+	@observable editableCommentId = ''
+	@observable newCommentFocus = false
+	@observable newCommentPostId = ''
 
 	constructor() {
 		autorun(() => console.log(this))
@@ -33,19 +34,34 @@ class ObservableCommentsStore {
 		this.comment[name] = value
 	}
 
+	/**
+	 *
+	 */
+
 	handleCommentDelete = commentId => {
 		this.commentaries = this.commentaries.filter(
 			comment => comment.id !== commentId
 		)
 	}
 
+	handleCommentEdit = commentId => {
+		this.editableComment = true
+		this.editableCommentId = commentId
+		this.comment = this.commentaries.find(comment => comment.id === commentId)
+	}
+
+	handleCommentEditSave = () => {
+		this.editableComment = false
+		this.editableCommentId = ''
+		this.post = getClearComment()
+	}
 	/**
 	 *
 	 */
-	toggleCommentFocus = (postId) => {
-        this.newCommentFocus = !this.newCommentFocus
-        this.newCommentPostId = postId
-        this.comment = getClearComment()
+	toggleCommentFocus = postId => {
+		this.newCommentFocus = !this.newCommentFocus
+		this.newCommentPostId = postId
+		this.comment = getClearComment()
 	}
 
 	addComment = postId => {
@@ -54,8 +70,8 @@ class ObservableCommentsStore {
 				...this.comment,
 				postId,
 				createdAt: Date.now()
-            })
-            this.newCommentFocus = false
+			})
+			this.newCommentFocus = false
 			this.comment = getClearComment()
 		}
 	}

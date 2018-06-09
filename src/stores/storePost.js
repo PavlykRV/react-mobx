@@ -46,17 +46,17 @@ class ObservablePostsStore {
 	/**
 	 *
 	 */
-	handlePostDelete = id => {
-		const updatedPosts = this.posts.filter(post => post.id !== id)
+	handlePostDelete = postId => {
+        const updatedPosts = this.posts.filter(post => post.id !== postId)
 		this.posts = updatedPosts
 	}
 	/**
 	 *
 	 */
-	handlePostEdit = id => {
+	handlePostEdit = postId => {
 		this.editablePost = true
-		this.editablePostId = id
-		this.post = this.posts.find(post => post.id === id)
+        this.editablePostId = postId
+        this.post = this.posts.find(post => post.id === postId)
 	}
 	/**
 	 *

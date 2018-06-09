@@ -31,8 +31,8 @@ class PostsListComponent extends Component {
 			<Well>
 				{this.props.store.posts.map(post => {
 					return (
-						<Panel key={post.id}>
-							<Panel.Heading>
+						<Panel key={post.id} className="post-item">
+							<Panel.Heading className="post-item-head">
 								{editablePost && editablePostId === post.id ? (
 									<FormControl
 										type="text"
@@ -45,7 +45,7 @@ class PostsListComponent extends Component {
 									<Panel.Title componentClass="h3">{post.title}</Panel.Title>
 								)}
 							</Panel.Heading>
-							<Panel.Body>
+                            <Panel.Body className="post-item-body">
 								{editablePost && editablePostId === post.id ? (
 									<FormControl
 										componentClass="textarea"
