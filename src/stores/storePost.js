@@ -85,12 +85,17 @@ class ObservablePostsStore {
 	clearNewPostFocus = () => {
 		this.focusNewPost = false
     }
+
+    handlePostCategorySelect = (event) => {
+        event.stopPropagation()
+        this.post.categories.push(event.target.value)
+    }
     
 	/**
 	 *
 	 */
 	addPost = () => {
-		if (this.post.title && this.post.content) {
+		if (this.post.title && this.post.content && this.post.categories.length) {
 			this.posts.push({ ...this.post, createdAt: Date.now() })
 			this.post = getClearPost()
 		}

@@ -4,7 +4,6 @@ import observableCommentsStore from './../../../stores/storeComments'
 import {
 	Panel,
 	FormControl,
-	ButtonToolbar,
 	ButtonGroup,
 	Button,
 	Well,
@@ -57,9 +56,8 @@ class PostsListComponent extends Component {
 								) : (
 									<Fragment>
 										<p>{post.content}</p>
-										<p className="post-date">{`Added at: ${new Date(
-											post.createdAt
-										).toLocaleString()}`}</p>
+										<p className="post-date">{`Added at: ${new Date(post.createdAt).toLocaleString()}`}</p>
+                                        <p className="post-date">{`Category: ${post.categories.length ? post.categories[0] : 'uncategorized'}`}</p>
 									</Fragment>
 								)}
 							</Panel.Body>
