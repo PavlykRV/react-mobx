@@ -13,6 +13,7 @@ import PostsListComponent from './modules/Posts/PostsList/PostsListComponent'
 import observablePostsStore from './stores/storePost'
 import observableCategoriesStore from './stores/storeCategories'
 import observableAppActionsStore from './stores/storeAppActions'
+
 // import global styles
 import './App.css'
 
