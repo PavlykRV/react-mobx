@@ -12,7 +12,10 @@ class CommentsListComponent extends Component {
 	render() {
 		return (
 			<div className="comments-list">
-                <CommentAddComponent />
+                <CommentAddComponent
+                    post={this.props.post}
+                    store={this.props.store}
+                />
                 {this.props.store.commentaries.map(comment => {
                     return (
                         <CommentItemComponent 

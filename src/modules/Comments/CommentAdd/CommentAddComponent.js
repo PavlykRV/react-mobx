@@ -15,10 +15,17 @@ class CommentAddComponent extends Component {
 						componentClass="textarea"
 						placeholder=""
 						name="content"
+						value={this.props.store.comment.content}
+						onChange={(event => this.props.store.handleCommentChange(event))}
 					/>
 				</FormGroup>
 				<ButtonToolbar className="comment-edit-actions">
-					<Button bsStyle="primary">Post comment</Button>
+					<Button
+						bsStyle="primary"
+						onClick={() => this.props.store.addComment(this.props.post.id)}
+					>
+						Post comment
+					</Button>
 				</ButtonToolbar>
 			</form>
 		)

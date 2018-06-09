@@ -7,4 +7,5 @@
 
 .comment-item-actions {
     display: flex;
+    justify-content: flex-end;
 }
