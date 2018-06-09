@@ -7,12 +7,16 @@ const getClearCategory = () => {
 
 class ObservableCategoriesStore {
 	@observable
-	categories = [{
-        id: cuid(),
-        createdAt: Date.now(),
-        name: 'Default'
-    }]
+	categories = [
+		{
+			id: cuid(),
+			createdAt: Date.now(),
+			name: 'Default'
+		}
+	]
 	@observable category = getClearCategory()
+	@observable editableCategory = false
+	@observable editableCategoryId = ''
 
 	/**
 	 *
@@ -38,6 +42,24 @@ class ObservableCategoriesStore {
 		this.categories = this.categories.filter(
 			category => category.id !== categoryId
 		)
+	}
+
+	/**
+	 *
+	 */
+	handleCategoryEdit = categoryId => {
+        this.editableCategory = true
+        this.editableCategoryId = categoryId
+        this.category = this.categories.find(category => category.id === categoryId)
+	}
+
+	/**
+	 *
+	 */
+	handleCategoryEditSave = () => {
+        this.editableCategory = false
+        this.editableCategoryId = ''
+		this.category = getClearCategory()
 	}
 
 	/**

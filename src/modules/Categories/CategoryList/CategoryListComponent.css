@@ -9,6 +9,9 @@
     align-items: center;
 }
 
+.category-item input {
+    max-width: calc(100% - 50px);
+}
 .category-item button {
     display: none;
 }

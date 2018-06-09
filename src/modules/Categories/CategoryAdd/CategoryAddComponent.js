@@ -8,11 +8,12 @@ import './CategoryAddComponent.css'
 @observer
 class CategoryAddComponent extends Component {
 	render() {
-        const {
-            category,
-            handleCategoryChange,
-            addCategory,
-        } = this.props.store
+		const {
+			category,
+			editableCategory,
+			handleCategoryChange,
+			addCategory
+		} = this.props.store
 
 		return (
 			<form>
@@ -21,12 +22,17 @@ class CategoryAddComponent extends Component {
 						type="text"
 						placeholder="Add new category"
 						name="name"
-						value={category.name}
-                        onChange={event => handleCategoryChange(event)}
+						readOnly={editableCategory}
+						value={editableCategory ? '' : category.name}
+						onChange={event => handleCategoryChange(event)}
 					/>
 				</FormGroup>
 				<ButtonToolbar className="comment-edit-actions">
-					<Button bsStyle="primary" onClick={() => addCategory()}>
+					<Button
+						bsStyle="primary"
+						onClick={() => addCategory()}
+						disabled={editableCategory}
+					>
 						Add category
 					</Button>
 				</ButtonToolbar>
