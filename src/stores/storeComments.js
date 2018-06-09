@@ -1,4 +1,4 @@
-import { observable, autorun, reaction } from 'mobx'
+import { observable, autorun, reaction, computed } from 'mobx'
 import cuid from 'cuid'
 import observablePostsStore from './storePost'
 import observableAppActionsStore from './storeAppActions'
@@ -33,6 +33,7 @@ class ObservableCommentsStore {
                 if (length > this.commentariesCount) {
                     observableAppActionsStore.addAction({
                         id: cuid(),
+                        createdAt: Date.now(),
                         type: 'success',
                         content: 'Comment added'
                     })
@@ -41,6 +42,7 @@ class ObservableCommentsStore {
                 if (length < this.commentariesCount) {
                     observableAppActionsStore.addAction({
                         id: cuid(),
+                        createdAt: Date.now(),
                         type: 'danger',
                         content: 'Comment removes'
                     })
@@ -54,13 +56,19 @@ class ObservableCommentsStore {
                 if (!id) {
                     observableAppActionsStore.addAction({
                         id: cuid(),
+                        createdAt: Date.now(),
                         type: 'info',
                         content: 'Comment edited'
                     })
                 }
             }
         )
-	}
+    }
+    
+    @computed
+    get sortedComments() {
+        return this.commentaries.slice().sort((a, b) => b.createdAt - a.createdAt)
+    }
 
 	/**
 	 *

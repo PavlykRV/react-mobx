@@ -1,11 +1,12 @@
-import { observable, autorun } from 'mobx'
+import { observable, autorun, computed } from 'mobx'
 import cuid from 'cuid'
 
 class ObservableAppActionsStore {
 	@observable
 	appActions = [
 		{
-			id: cuid(),
+            id: cuid(),
+            createdAt: Date.now(),
 			type: 'info',
 			content: 'App started'
 		}
@@ -13,7 +14,12 @@ class ObservableAppActionsStore {
 
 	constructor() {
 		autorun(() => console.log(this))
-	}
+    }
+    
+    @computed
+    get sortedActions() {
+        return this.appActions.slice().sort((a, b) => b.createdAt - a.createdAt)
+    }
 
 	addAction = action => {
 		this.appActions.push(action)

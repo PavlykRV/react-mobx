@@ -43,6 +43,7 @@ class ObservablePostsStore {
 				if (length > this.postsCount) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'success',
 						content: 'Post added'
 					})
@@ -51,6 +52,7 @@ class ObservablePostsStore {
 				if (length < this.postsCount) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'danger',
 						content: 'Post removes'
 					})
@@ -64,6 +66,7 @@ class ObservablePostsStore {
 				if (!id) {
                     observableAppActionsStore.addAction({
                         id: cuid(),
+                        createdAt: Date.now(),
                         type: 'info',
                         content: 'Post edited'
                     })
@@ -77,14 +80,15 @@ class ObservablePostsStore {
 		const { activeCategory } = observableCategoriesStore
 
 		if (activeCategory) {
-			return this.posts.filter(post => {
+			const filteredPosts = this.posts.filter(post => {
 				return (
 					post.categories.length !== 0 &&
 					post.categories.includes(activeCategory.name)
 				)
-			})
+            })
+            return filteredPosts.sort((a, b) => b.createdAt - a.createdAt)
 		}
-		return this.posts
+        return this.posts.slice().sort((a, b) => b.createdAt - a.createdAt)
 	}
 
 	/**

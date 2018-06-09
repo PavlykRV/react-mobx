@@ -53,6 +53,7 @@ class ObservableCategoriesStore {
 				if (!id) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'info',
 						content: 'Category edited'
 					})
@@ -65,6 +66,7 @@ class ObservableCategoriesStore {
 				if (!activeCategory) {
 					observableAppActionsStore.addAction({
 						id: cuid(),
+						createdAt: Date.now(),
 						type: 'warning',
 						content: 'Filter cleared'
 					})
@@ -72,6 +74,7 @@ class ObservableCategoriesStore {
                 if (activeCategory && activeCategory.id) {
                     observableAppActionsStore.addAction({
                         id: cuid(),
+                        createdAt: Date.now(),
                         type: 'info',
                         content: 'Filter changed'
                     })
