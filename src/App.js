@@ -27,14 +27,14 @@ class App extends Component {
 					</Col>
 				</Row>
 				<Row>
-                    <Col xs={10} xsOffset={1} md={3}>
+					<Col xs={10} xsOffset={1} md={3} mdOffset={0}>
 						<CategoryListComponent store={observableCategoriesStore} />
 					</Col>
-                    <Col xs={12} md={6}>
+					<Col xs={12} md={6}>
 						<PostAddComponent store={observablePostsStore} />
 						<PostsListComponent store={observablePostsStore} />
 					</Col>
-					<Col xs={10} xsOffset={1} md={3}>
+					<Col xs={10} xsOffset={1} md={3} mdOffset={0}>
 						<ActionsPanelListComponent store={observableAppActionsStore} />
 					</Col>
 				</Row>
