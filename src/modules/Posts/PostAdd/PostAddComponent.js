@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+
+import React, { Component, Fragment } from 'react'
 import {
 	FormGroup,
 	FormControl,
@@ -10,6 +11,16 @@ import { observer } from 'mobx-react'
 @observer
 class PostAddComponent extends Component {
 	render() {
+		const {
+			setNewPostFocus,
+			clearNewPostFocus,
+			editablePost,
+			handlePostChange,
+			post,
+			focusNewPost,
+			addPost
+		} = this.props.store
+
 		return (
 			<Well>
 				<form>
@@ -18,28 +29,34 @@ class PostAddComponent extends Component {
 							type="text"
 							placeholder="Add new post"
 							name="title"
-                            value={!this.props.store.editablePost ? this.props.store.post.title : ''}
-							onChange={e => this.props.store.handlePostChange(e)}
+							onFocus={setNewPostFocus}
+							onBlur={clearNewPostFocus}
+							value={!editablePost ? post.title : ''}
+							onChange={event => handlePostChange(event)}
 						/>
 					</FormGroup>
-					<FormGroup controlId="formControlsTextarea">
-						<FormControl
-                            componentClass="textarea"
-                            placeholder=""
-                            name="content"
-                            value={!this.props.store.editablePost ? this.props.store.post.content : ''}
-                            onChange={e => this.props.store.handlePostChange(e)}
-                        />
-					</FormGroup>
-					<ButtonToolbar>
-						<Button
-                            bsStyle="success"
-                            onClick={this.props.store.addPost}
-                            disabled={this.props.store.editablePost}
-                        >
-                            Post
-                        </Button>
-					</ButtonToolbar>
+					{(focusNewPost || post.title) && (
+						<Fragment>
+							<FormGroup controlId="formControlsTextarea">
+								<FormControl
+									componentClass="textarea"
+									placeholder=""
+									name="content"
+									value={!editablePost ? post.content : ''}
+									onChange={event => handlePostChange(event)}
+								/>
+							</FormGroup>
+							<ButtonToolbar>
+								<Button
+									bsStyle="primary"
+									onClick={addPost}
+									disabled={editablePost}
+								>
+									Post
+								</Button>
+							</ButtonToolbar>
+						</Fragment>
+					)}
 				</form>
 			</Well>
 		)

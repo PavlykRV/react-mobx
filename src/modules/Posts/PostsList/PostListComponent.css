@@ -1,0 +1,18 @@
+.post-item {
+    box-shadow: 0px 0px 16px rgba(159,161,176,0);
+    transition: box-shadow .25s ease;
+}
+.post-item:hover {
+    box-shadow: 0px 8px 16px rgba(159,161,176,0.7);
+}
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.post-date {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}

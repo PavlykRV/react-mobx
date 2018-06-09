@@ -1,0 +1,25 @@
+.category-list {
+
+}
+
+.category-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-item input {
+    max-width: calc(100% - 50px);
+}
+.category-item button {
+    display: none;
+}
+
+.category-item:hover button {
+    display: block;
+}
+
+.category-add {
+    cursor: pointer;
+}
