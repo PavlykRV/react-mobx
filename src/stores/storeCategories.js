@@ -21,11 +21,11 @@ class ObservableCategoriesStore {
 	@observable editableCategoryId = ''
 	@observable activeCategory = null
 
-	/**
-	 *
-	 */
 	constructor() {
-		autorun(() => console.log(this))
+        autorun(() => console.log(this))
+        /**
+         * Store reaction on categories collection changes
+         */
 		reaction(
 			() => this.categories.length,
 			length => {
@@ -48,7 +48,10 @@ class ObservableCategoriesStore {
 					this.categoriesCount = length
 				}
 			}
-		)
+        )
+        /**
+         * Store reaction on category editing
+         */
 		reaction(
 			() => this.editableCategoryId,
 			id => {
@@ -61,7 +64,10 @@ class ObservableCategoriesStore {
 					})
 				}
 			}
-		)
+        )
+        /**
+         * Store reaction on changing category filter
+         */
 		reaction(
 			() => this.activeCategory,
 			activeCategory => {
@@ -72,21 +78,22 @@ class ObservableCategoriesStore {
 						type: 'warning',
 						content: 'Filter cleared'
 					})
-                }
-                if (activeCategory && activeCategory.id) {
-                    observableAppActionsStore.addAction({
-                        id: cuid(),
-                        createdAt: Date.now(),
-                        type: 'info',
-                        content: 'Filter changed'
-                    })
-                }
+				}
+				if (activeCategory && activeCategory.id) {
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						createdAt: Date.now(),
+						type: 'info',
+						content: 'Filter changed'
+					})
+				}
 			}
 		)
 	}
 
 	/**
-	 *
+	 * Handle change text in category name
+	 * @param {Object} event - onChange event
 	 */
 	handleCategoryChange = event => {
 		event.stopPropagation()
@@ -96,7 +103,8 @@ class ObservableCategoriesStore {
 	}
 
 	/**
-	 *
+	 * Handle category deleting from category collection
+	 * @param {String} categoryId - selected category id
 	 */
 	handleCategoryDelete = categoryId => {
 		this.categories = this.categories.filter(
@@ -105,7 +113,8 @@ class ObservableCategoriesStore {
 	}
 
 	/**
-	 *
+	 * Handle category editing by enabling 'editableCategory' and search target category in collection
+	 * @param {String} categoryId - selected category id
 	 */
 	handleCategoryEdit = categoryId => {
 		this.editableCategory = true
@@ -114,7 +123,7 @@ class ObservableCategoriesStore {
 	}
 
 	/**
-	 *
+	 * Handle to save category edited changes
 	 */
 	handleCategoryEditSave = () => {
 		this.editableCategory = false
@@ -123,25 +132,26 @@ class ObservableCategoriesStore {
 	}
 
 	/**
-	 *
+	 * Setting up active filter by selected category
+     * @param {String} categoryId - id of selected category
 	 */
 	setActiveCategory = categoryId => {
-        event.stopPropagation()
-        
+		event.stopPropagation()
+
 		this.activeCategory = this.categories.find(
 			category => category.id === categoryId
 		)
 	}
 
 	/**
-	 *
+	 * Disabling category filtering
 	 */
 	clearActiveCategory = () => {
 		this.activeCategory = null
 	}
 
 	/**
-	 *
+	 * Handle new category added to collection
 	 */
 	addCategory = () => {
 		if (

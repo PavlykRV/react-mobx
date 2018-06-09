@@ -38,6 +38,9 @@ class ObservablePostsStore {
 	 */
 	constructor() {
 		autorun(() => console.log(this))
+		/**
+		 * Store reaction on posts collection changes
+		 */
 		reaction(
 			() => this.posts.length,
 			length => {
@@ -61,16 +64,19 @@ class ObservablePostsStore {
 				}
 			}
 		)
+		/**
+		 * Store reaction on post editing
+		 */
 		reaction(
 			() => this.editablePostId,
 			id => {
 				if (!id) {
-                    observableAppActionsStore.addAction({
-                        id: cuid(),
-                        createdAt: Date.now(),
-                        type: 'info',
-                        content: 'Post edited'
-                    })
+					observableAppActionsStore.addAction({
+						id: cuid(),
+						createdAt: Date.now(),
+						type: 'info',
+						content: 'Post edited'
+					})
 				}
 			}
 		)
@@ -86,14 +92,15 @@ class ObservablePostsStore {
 					post.categories.length !== 0 &&
 					post.categories.includes(activeCategory.name)
 				)
-            })
-            return filteredPosts.sort((a, b) => b.createdAt - a.createdAt)
+			})
+			return filteredPosts.sort((a, b) => b.createdAt - a.createdAt)
 		}
-        return this.posts.slice().sort((a, b) => b.createdAt - a.createdAt)
+		return this.posts.slice().sort((a, b) => b.createdAt - a.createdAt)
 	}
 
 	/**
-	 *
+	 * Handle change text in post title and content
+	 * @param {Object} event - onChange event
 	 */
 	handlePostChange = event => {
 		event.stopPropagation()
@@ -103,7 +110,8 @@ class ObservablePostsStore {
 	}
 
 	/**
-	 *
+	 * Handle post deleting from posts collection
+	 * @param {String} postId - selected post id
 	 */
 	handlePostDelete = postId => {
 		const updatedPosts = this.posts.filter(post => post.id !== postId)
@@ -111,7 +119,8 @@ class ObservablePostsStore {
 	}
 
 	/**
-	 *
+	 * Handle post editing by enabling 'editablePost' and search target post in collection
+	 * @param {String} postId - selected post id
 	 */
 	handlePostEdit = postId => {
 		this.editablePost = true
@@ -120,7 +129,7 @@ class ObservablePostsStore {
 	}
 
 	/**
-	 *
+	 * Handle to save post edited changes
 	 */
 	handlePostEditSave = () => {
 		this.editablePost = false
@@ -129,26 +138,31 @@ class ObservablePostsStore {
 	}
 
 	/**
-	 *
+	 *  Setting up focus for creating new post component
 	 */
 	setNewPostFocus = () => {
 		this.focusNewPost = true
 	}
 
 	/**
-	 *
+	 * Remove focus for from new post component
 	 */
 	clearNewPostFocus = () => {
 		this.focusNewPost = false
 	}
 
+	/**
+	 * Handle change category for new created post
+	 * @param {Object} event - onChange event on select input
+	 */
 	handlePostCategorySelect = event => {
 		event.stopPropagation()
+
 		this.post.categories.push(event.target.value)
 	}
 
 	/**
-	 *
+	 * Handle new post added to collection
 	 */
 	addPost = () => {
 		if (this.post.title && this.post.content && this.post.categories.length) {
