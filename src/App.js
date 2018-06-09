@@ -13,33 +13,33 @@ import PostsListComponent from './modules/Posts/PostsList/PostsListComponent'
 import observablePostsStore from './stores/storePost'
 import observableCategoriesStore from './stores/storeCategories'
 import observableAppActionsStore from './stores/storeAppActions'
-
 // import global styles
 import './App.css'
 
 @observer
 class App extends Component {
 	render() {
-		return <Grid>
+		return (
+			<Grid>
 				<Row>
 					<Col xs={12}>
 						<HeaderComponent />
 					</Col>
 				</Row>
 				<Row>
-					<Col xs={3} md={3}>
-
+					<Col xs={10} xsOffset={1} md={3} mdOffset={0}>
 						<CategoryListComponent store={observableCategoriesStore} />
 					</Col>
-					<Col xs={9} md={6}>
+					<Col xs={12} md={6}>
 						<PostAddComponent store={observablePostsStore} />
 						<PostsListComponent store={observablePostsStore} />
 					</Col>
-					<Col xs={3} md={3}>
+					<Col xs={10} xsOffset={1} md={3} mdOffset={0}>
 						<ActionsPanelListComponent store={observableAppActionsStore} />
 					</Col>
 				</Row>
 			</Grid>
+		)
 	}
 }
 

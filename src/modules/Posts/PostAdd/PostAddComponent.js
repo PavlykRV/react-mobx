@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react'
 import {
 	FormGroup,
 	FormControl,
-	ControlLabel,
 	Button,
 	Well
 } from 'react-bootstrap'
@@ -25,7 +24,7 @@ class PostAddComponent extends Component {
 			addPost,
 			handlePostCategorySelect
 		} = this.props.store
-
+        
 		return (
 			<Well>
 				<form>
@@ -37,10 +36,11 @@ class PostAddComponent extends Component {
 							onFocus={setNewPostFocus}
 							onBlur={clearNewPostFocus}
 							value={!editablePost ? post.title : ''}
-							onChange={event => handlePostChange(event)}
+                            onChange={event => handlePostChange(event)}
+                            readOnly={editablePost}
 						/>
 					</FormGroup>
-					{(focusNewPost || post.title) && (
+                    {(focusNewPost || (post.title && !editablePost)) && (
 						<Fragment>
 							<FormGroup controlId="formControlsTextarea">
 								<FormControl
