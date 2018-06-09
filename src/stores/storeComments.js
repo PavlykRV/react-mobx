@@ -21,7 +21,8 @@ class ObservableCommentsStore {
 	 */
 	@observable comment = getClearComment()
 	@observable editableComment = false
-	@observable newCommentFocus = false
+    @observable newCommentFocus = false
+    @observable newCommentPostId = ''
 
 	constructor() {
 		autorun(() => console.log(this))
@@ -41,8 +42,9 @@ class ObservableCommentsStore {
 	/**
 	 *
 	 */
-	toggleCommentFocus = () => {
+	toggleCommentFocus = (postId) => {
         this.newCommentFocus = !this.newCommentFocus
+        this.newCommentPostId = postId
         this.comment = getClearComment()
 	}
 
@@ -53,7 +55,7 @@ class ObservableCommentsStore {
 				postId,
 				createdAt: Date.now()
             })
-            this.toggleCommentFocus()
+            this.newCommentFocus = false
 			this.comment = getClearComment()
 		}
 	}

@@ -91,13 +91,15 @@ class PostsListComponent extends Component {
 								<ButtonGroup>
 									<Button
 										bsStyle={
-											observableCommentsStore.newCommentFocus
+                                            observableCommentsStore.newCommentFocus &&
+                                            post.id === observableCommentsStore.newCommentPostId
 												? 'warning'
 												: 'primary'
 										}
-										onClick={() => observableCommentsStore.toggleCommentFocus()}
+										onClick={() => observableCommentsStore.toggleCommentFocus(post.id)}
 									>
-										{observableCommentsStore.newCommentFocus
+                                        {observableCommentsStore.newCommentFocus &&
+                                        post.id === observableCommentsStore.newCommentPostId
 											? 'Cancel'
 											: 'Add comment'}
 									</Button>

@@ -12,14 +12,16 @@ class CommentsListComponent extends Component {
 	render() {
 		return (
 			<div className="comments-list">
-				{this.props.store.newCommentFocus && (
+                {(this.props.store.newCommentFocus && this.props.store.newCommentPostId === this.props.post.id) && (
 					<CommentAddComponent
 						post={this.props.post}
 						store={this.props.store}
 					/>
 				)}
 				{this.props.store.commentaries.map(comment => {
-					return <CommentItemComponent key={comment.id} comment={comment} />
+                    if (comment.postId === this.props.post.id) {
+                        return <CommentItemComponent key={comment.id} comment={comment} />
+                    }
 				})}
 			</div>
 		)
